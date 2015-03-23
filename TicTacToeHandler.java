@@ -15,6 +15,19 @@ import com.sun.net.httpserver.HttpServer;
 
 /**
  * A handler for a tic-tac-toe game.
+ *
+ * The response body format for a call to /new is
+ * {"gameId": UUID}
+ *
+ * The expected body format for a call to /move is
+ * { "gameId": UUID,
+ *   "playerMark": [XO],
+ *   "x":(0..2),
+ *   "y":(0..2) }
+ * The response body format for a call to /move is
+ * { "error": errorString,
+ *   "gameState": ["tie"|"ongoing"|"win"],
+ *   "winner": ["X"|"O"] }
  */
 public class TicTacToeHandler implements HttpHandler {
 
@@ -73,6 +86,7 @@ public class TicTacToeHandler implements HttpHandler {
         response.winner = playerMark.toString();
       }
     } else {
+      System.out.println(response.error);
       response.error = TicTacToeResponse.INVALID_MOVE;
     }
     return response;
@@ -81,7 +95,7 @@ public class TicTacToeHandler implements HttpHandler {
   /**
    * Handles requests to the tic-tac-toe server.
    * /new calls newGame(), /move calls move()
-   * 
+   *
    */
   public void handle(HttpExchange t) throws IOException {
     TicTacToeResponse response = new TicTacToeResponse();

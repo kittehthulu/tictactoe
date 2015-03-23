@@ -36,7 +36,7 @@ public class TicTacToe {
    */
   public boolean isValidMove(int x, int y, Mark mark) {
     return ((x >= 0 && x <= 2 && y >= 0 && y <= 2)
-        || (this.board[x][y] == null))
+        && (this.board[x][y] == null))
         && (this.lastMove != mark);
   }
 
