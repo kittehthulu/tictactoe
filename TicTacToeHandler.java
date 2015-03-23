@@ -14,22 +14,13 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 /**
- * A stupid handler for a tic-tac-toe game.
+ * A handler for a tic-tac-toe game.
  */
 public class TicTacToeHandler implements HttpHandler {
 
-  /**
-  Requirements for creating a TicTacToeServer:
-  1. gameplay logic - how to intelligently win/not lose : TicTacToe
-  2. maintaining connections : here
-  3. configuring RESTful URLs (/new, /move) : here
-  4. maintaining games : here
-
-  Rules/Errors:
-  - Moving out of order
-  - Trying to play a game that doesn't exist.
-  -
-  */
+  // For keeping track of multiple tic-tac-toe games.  Not fully utilized.
+  // Ideally, next iteration would maintain a queue of users waiting to join a
+  // game.
   private HashMap<String, TicTacToe> games = new HashMap<String, TicTacToe>();
 
 
@@ -90,6 +81,7 @@ public class TicTacToeHandler implements HttpHandler {
   /**
    * Handles requests to the tic-tac-toe server.
    * /new calls newGame(), /move calls move()
+   * 
    */
   public void handle(HttpExchange t) throws IOException {
     TicTacToeResponse response = new TicTacToeResponse();
